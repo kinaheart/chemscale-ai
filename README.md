@@ -1,4 +1,4 @@
-# Base44 Project
+# ChemScale AI made with Base44
 
 Use this repository to run and edit the app locally, then publish changes back through Base44.
 
