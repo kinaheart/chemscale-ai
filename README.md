@@ -41,7 +41,7 @@ To work on just the frontend against your app's live hosted backend:
 base44 dev --remote
 ```
 
-â ï¸ In this mode writes go to your app's **production data** â plain `base44 dev` keeps everything local.
+In this mode writes go to your app's **production data** plain `base44 dev` keeps everything local.
 
 ## Publish Your Changes
 
@@ -51,7 +51,7 @@ After pushing your changes to git, open the Base44 dashboard and publish the app
 base44 dashboard open
 ```
 
-This repo syncs to Base44 through git, so publish from the dashboard rather than `base44 deploy` â a CLI deploy ships your local tree directly, bypassing the sync, and the deployed state silently diverges from the repo.
+This repo syncs to Base44 through git, so publish from the dashboard rather than `base44 deploy` a CLI deploy ships your local tree directly, bypassing the sync, and the deployed state silently diverges from the repo.
 
 ## Docs & Support
 
