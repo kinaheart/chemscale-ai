@@ -2,7 +2,7 @@
 
 ## Project Context
 
-This is a Base44 app repository. Treat it as user-owned application code, keep changes focused on the user's request, and preserve existing project conventions.
+This is an app repo.
 
 Start with `README.md` for local setup, environment variables, and publish workflow.
 
