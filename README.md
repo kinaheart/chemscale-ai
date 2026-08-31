@@ -1,5 +1,7 @@
 # ChemScale AI made with Base44
 
+Welcome to ChemScale AI, an interactive chemistry learning tool that uses a virtual balance scale and AI-guided quizzes to help students master molar masses and chemical bonding through hands-on exploration! Also, welcome to the README. Most of the code was thanks to base44.
+
 Use this repository to run and edit the app locally, then publish changes back through Base44.
 
 Any change pushed to the repo will also be reflected in the Base44 Builder.
