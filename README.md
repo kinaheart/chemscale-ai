@@ -10,7 +10,7 @@ Any change pushed to the repo will also be reflected in the Base44 Builder.
 2. Navigate to the project directory.
 3. Install dependencies: `npm install`.
 4. Install the Base44 CLI: `npm install -g base44@latest`.
-5. Install [Deno](https://docs.deno.com/runtime/getting_started/installation/) â the local Base44 backend runs on it.
+5. Install [Deno](https://docs.deno.com/runtime/getting_started/installation/) the local Base44 backend runs on it.
 
 Run `base44 --help` (or see the [CLI reference](https://docs.base44.com/developers/references/cli/commands/introduction)) for the full command surface.
 
