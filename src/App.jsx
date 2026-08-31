@@ -8,6 +8,7 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 import ChooseRun from './pages/ChooseRun';
 import LiveBalance from './pages/LiveBalance';
+import Quiz from './pages/Quiz';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -38,6 +39,7 @@ const AuthenticatedApp = () => {
       <Route path="/" element={<ChooseRun />} />
       <Route path="/balance" element={<LiveBalance />} />
       <Route path="/balance/:runId" element={<LiveBalance />} />
+      <Route path="/quiz" element={<Quiz />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

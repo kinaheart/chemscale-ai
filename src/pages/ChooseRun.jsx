@@ -28,7 +28,7 @@ export default function ChooseRun() {
         difference: 0,
         phase: "intro",
       });
-      setHint(res.hint);
+      setHint(res?.data?.hint ?? res?.hint);
     } catch (e) {
       setHint("Start light — hydrogen is the lightest element on the table and a great first move.");
     }
@@ -93,7 +93,7 @@ export default function ChooseRun() {
         </div>
 
         <LabNote />
-        <TutorSignal hint={hint} loading={loading} onAsk={askNudge} />
+        <TutorSignal hint={hint} loading={loading} onAsk={askNudge} onQuiz={() => navigate("/quiz")} />
       </div>
     </div>
   );

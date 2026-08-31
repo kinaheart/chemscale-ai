@@ -12,6 +12,14 @@ import TutorSignal from "@/components/balance/TutorSignal";
 
 let uid = 0;
 
+const FUN_PHRASES = [
+  "Are you having fun with ChemScale AI? Because I am!",
+  "Chemistry is super fun, am I right?",
+  "Keep stacking those atoms — every combination tells a story!",
+  "Two pans, endless molecules — what will you build next?",
+  "I love watching the scale tip. Try something surprising!",
+];
+
 export default function LiveBalance() {
   const { runId } = useParams();
   const navigate = useNavigate();
@@ -31,6 +39,7 @@ export default function LiveBalance() {
   const leftComp = compositionFromItems(leftPan);
   const rightComp = compositionFromItems(rightPan);
   const leftMol = matchMolecule(leftComp);
+  const rightMol = matchMolecule(rightComp);
   const targetMass = run ? molarMass(run.composition) : 0;
 
   useEffect(() => {
@@ -84,36 +93,26 @@ export default function LiveBalance() {
   };
 
   const askNudge = async () => {
+    if (!run) {
+      setHint(FUN_PHRASES[Math.floor(Math.random() * FUN_PHRASES.length)]);
+      return;
+    }
     setLoading(true);
     try {
-      const res = await base44.functions.invoke(
-        "getTutorNudge",
-        run ?
-        {
-          targetSymbol: run.formula,
-          targetName: run.name,
-          targetComposition: run.composition,
-          currentComposition: leftComp,
-          leftMass,
-          rightMass,
-          difference: rightMass - leftMass,
-          phase: "build"
-        } :
-        {
-          currentComposition: leftComp,
-          leftMass,
-          rightMass,
-          difference: rightMass - leftMass,
-          phase: "free"
-        }
-      );
-      setHint(res.hint);
+      const res = await base44.functions.invoke("getTutorNudge", {
+        targetSymbol: run.formula,
+        targetName: run.name,
+        targetComposition: run.composition,
+        currentComposition: leftComp,
+        leftMass,
+        rightMass,
+        difference: rightMass - leftMass,
+        phase: "build",
+        level: run.level
+      });
+      setHint(res?.data?.hint ?? res?.hint);
     } catch (e) {
-      setHint(
-        run ?
-        "Compare the left pan to your target. Which element is missing — or overcounted?" :
-        "Try building a familiar molecule — water, salt, or methane — and watch the scale respond."
-      );
+      setHint("Compare the left pan to your target. Which element is missing — or overcounted?");
     }
     setLoading(false);
   };
@@ -161,16 +160,21 @@ export default function LiveBalance() {
         }
       </div>
 
-      <div className="px-5 mt-3 max-w-3xl mx-auto w-full">
+      <div className="px-5 mt-3 max-w-3xl mx-auto w-full flex flex-wrap gap-2">
         {run && won ?
         <div className="rounded-xl bg-[#c8d6a3] text-[#2c3e50] px-4 py-2 text-sm font-semibold flex items-center gap-2">
             <Check className="w-4 h-4" /> {run.formula} formed — {leftMass.toFixed(3)} g
           </div> :
-        leftMol ?
-        <div className="rounded-xl bg-[#284252] text-white px-4 py-2 text-sm flex items-center gap-2">
-            <FlaskConical className="w-4 h-4 text-[#d4f26a]" /> Left pan: <b>{leftMol.formula}</b> — {leftMol.name}
-          </div> :
-        null}
+        <>
+          {leftMol &&
+          <div className="rounded-xl bg-[#284252] text-white px-4 py-2 text-sm flex items-center gap-2">
+            <FlaskConical className="w-4 h-4 text-[#d4f26a]" /> Left: <b>{leftMol.formula}</b> — {leftMol.name}
+          </div>}
+          {rightMol &&
+          <div className="rounded-xl bg-[#284252] text-white px-4 py-2 text-sm flex items-center gap-2">
+            <FlaskConical className="w-4 h-4 text-[#d4f26a]" /> Right: <b>{rightMol.formula}</b> — {rightMol.name}
+          </div>}
+        </>}
       </div>
 
       <div className="flex-1 px-5 py-4">
@@ -212,7 +216,7 @@ export default function LiveBalance() {
       }
 
       <div className="px-5 pb-4 max-w-3xl mx-auto w-full">
-        <TutorSignal hint={hint} loading={loading} onAsk={askNudge} />
+        <TutorSignal hint={hint} loading={loading} onAsk={askNudge} onQuiz={() => navigate("/quiz")} />
       </div>
 
       <TelemetryBar leftMass={leftMass} rightMass={rightMass} />
